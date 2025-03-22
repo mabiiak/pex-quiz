@@ -77,7 +77,7 @@ export default function QuizCreation({ selecionado, setSelecionado }) {
 
           <div className="preview">
             <h2>Pré-visualização do Quiz</h2>
-            {perguntas.length === 0 ? <p>Nenhuma pergunta adicionada ainda.</p> : (
+            {perguntas.length === 0 ? <p>Nenhuma pergunta foi adicionada.</p> : (
               perguntas.map((q, i) => (
                 <div key={q.id} className="question-preview">
                   <p><strong>Pergunta {i + 1}:</strong> {q.pergunta}</p>

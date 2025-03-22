@@ -12,7 +12,7 @@ export default function Header({ selecionado, score, currentQuestionIndex }) {
           </div>
           <span className="title">{ selecionado ? selecionado.titulo : "Selecione um quiz" }</span>
           <div>
-          {currentQuestionIndex &&
+          {selecionado &&
             <>
               <span> {currentQuestionIndex} / {selecionado.perguntas.length} </span>
               <span> pontos: {score} </span>

@@ -103,7 +103,7 @@
   margin-top: 10px;
   cursor: pointer;
   border-radius: 5px;
-  width: 40%;
+  width: 100%;
 }
 
 .delete-button:hover {

@@ -1,13 +1,24 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Zain", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
-p, label, span, button, input {
-  font-size: 20px;
+p, label, span, button, li, input, input::placeholder {
+  font-size: 22px;
+}
+
+h1 {
+  font-size: 30px;
+}
+h2 {
+  font-size: 28px;
 }
 
 /* background-size: 100%; */
