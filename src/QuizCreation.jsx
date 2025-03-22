@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid"; 
 import Header from "./Header";
+import './css/lista.css';
 
 export default function QuizCreation({ selecionado, setSelecionado }) {
   // 🟢 Agora carregamos os quizzes diretamente ao inicializar o estado
@@ -49,7 +50,7 @@ export default function QuizCreation({ selecionado, setSelecionado }) {
     <div className="container">
       <Header selecionado={selecionado} />
 
-      <div className="quiz-box">
+      <div className="quiz-content-list">
         <div className="content">
           <input
             type="text"

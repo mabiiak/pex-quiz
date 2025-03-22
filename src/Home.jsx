@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "./Header";
 import image from "./assets/lari.png";
+import "./css/home.css";
 
 export default function Home({ selecionado }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);

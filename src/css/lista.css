@@ -1,0 +1,34 @@
+.quiz-item {
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+.quiz-list {
+  background-color: #32cd32;
+
+  display: flex;
+}
+
+.container-list {
+  display: flex;
+  /* flex-direction: column;
+  align-items: center; */
+  font-family: Arial, sans-serif;
+  background-color: #e7cec8;
+  width: 100%;
+  height: calc(100vh);
+}
+
+.quiz-content-list {
+  
+}
+
+.input-field, .option-input {
+  width: 90%;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+
+  

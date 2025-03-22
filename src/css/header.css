@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #D74F25;
+    width: 100%;
+    color: white;
+    height: 10vh;
+    font-size: 25px;
+    padding: 0 2%;
+  }
+  
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .nav button {
+    width: 150px;
+    font-size: 20px;
+    padding: 5px 15px;
+  }
+  
+  .title {
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  .header div:last-child {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
