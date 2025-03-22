@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid"; 
+import { v4 as uuidv4 } from "uuid";
+import { FaTrash } from "react-icons/fa";
 import Header from "./Header";
 import './css/lista.css';
 
@@ -44,108 +45,78 @@ export default function QuizCreation({ selecionado, setSelecionado }) {
     }
   };
 
+  const handleDelete = (id) => {
+    setQuizzes(quizzes.filter(quiz => quiz.id !== id));
+  };
+
   return (
-    <div className="container">
+    <div>
       <Header selecionado={selecionado} />
-
-      <div className="grid">
-        <div className="form-criacao">
-          <h2>Crie seu quiz</h2>
-          <input
-            type="text"
-            placeholder="Título"
-            className="input-field"
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Pergunta"
-            className="input-field"
-            value={novaPergunta}
-            onChange={(e) => setNovaPergunta(e.target.value)}
-          />
-          <div className="options-container">
-            <input
-              type="text"
-              placeholder="Adicionar opção"
-              className="option-input"
-              value={novaOpcao}
-              onChange={(e) => setNovaOpcao(e.target.value)}
-            />
-            <button onClick={addOption}>+</button>
-          </div>
-          <div className="opcoes-nao-salvas">
-            {opcoes.map((opt, index) => (
-              <label>  
-                <input
-                  type="radio"
-                  name="answer"
-                  onChange={() => {
+      <div className="container">
+        <div className="grid">
+          <div className="form-criacao">
+            <h1>Crie seu quiz</h1>
+            <input type="text" placeholder="Título" className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
+            <input type="text" placeholder="Pergunta" className="input-field" value={novaPergunta} onChange={(e) => setNovaPergunta(e.target.value)} />
+            <div className="options-container">
+              <input type="text" placeholder="Adicionar opção" className="option-input" value={novaOpcao} onChange={(e) => setNovaOpcao(e.target.value)} />
+              <button onClick={addOption}>+</button>
+            </div>
+            <div className="opcoes-nao-salvas">
+              {opcoes.map((opt, index) => (
+                <label key={index}>
+                  <input type="radio" name="answer" onChange={() => {
                     setOpcoes(opcoes.map((o, i) => ({ ...o, selecionado: i === index })));
-                  }}
-                  checked={opt.selecionado}
-                />
-                {opt.texto}
-              </label>
-            ))}
-            <button onClick={addQuestion}>Adicionar Pergunta</button>
+                  }} checked={opt.selecionado} />
+                  {opt.texto}
+                </label>
+              ))}
+              <button onClick={addQuestion}>Adicionar Pergunta</button>
+            </div>
           </div>
-        </div>
 
-        {/* Pré-visualização */}
-        <div className="preview">
-          <h2>Pré-visualização do Quiz</h2>
-          {perguntas.length === 0 ? (
-            <p>Nenhuma pergunta adicionada ainda.</p>
-          ) : (
-            perguntas.map((q, i) => (
-              <div key={q.id} className="question-preview">
-                <p><strong>Pergunta {i + 1}:</strong> {q.pergunta}</p>
-                <ul>
+          <div className="preview">
+            <h2>Pré-visualização do Quiz</h2>
+            {perguntas.length === 0 ? <p>Nenhuma pergunta adicionada ainda.</p> : (
+              perguntas.map((q, i) => (
+                <div key={q.id} className="question-preview">
+                  <p><strong>Pergunta {i + 1}:</strong> {q.pergunta}</p>
                   {q.opcoes.map((opt, j) => (
                     <li key={j} style={{ fontWeight: opt.selecionado ? "bold" : "normal" }}>{opt.texto}</li>
                   ))}
-                </ul>
-              </div>
-            ))
-          )}
-          <button className="save-button" onClick={handleSave} disabled={!titulo || perguntas.length === 0}>
-            Salvar Quiz
-          </button>
-        </div>
+                </div>
+              ))
+            )}
+            <button className="save-button" onClick={handleSave} disabled={!titulo || perguntas.length === 0}>Salvar Quiz</button>
+          </div>
 
-        {/* Lista de quizzes salvos */}
-        <div className="quiz-list">
-          <h2>Lista de quizzes</h2>
-          {quizzes.length === 0 ? (
-            <p>Nenhum quiz salvo ainda.</p>
-          ) : (
-            quizzes.map((quiz) => (
-              <div key={quiz.id} className="quiz-item">
-                <h3>{quiz.titulo}</h3>
-                
-                {quiz.perguntas.map((q, i) => (
-                  <div key={i}>
-                    <p><strong>Pergunta:</strong> {q.pergunta}</p>
-                    <ul>
-                      {q.opcoes.map((opt, j) => (
-                        <li key={j} style={{ fontWeight: opt.selecionado ? "bold" : "normal" }}>{opt.texto}</li>
-                      ))}
-                    </ul>
+          <div className="quiz-list">
+            <h1>Lista de quizes</h1>
+            <div className="exibicao">
+              {quizzes.length === 0 ? <p>Nenhum quiz salvo ainda.</p> : (
+                quizzes.map((quiz) => (
+                  <div key={quiz.id} className="card">
+                    <h2>{quiz.titulo}</h2>
+                    {quiz.perguntas.map((q, i) => (
+                      <div key={i} id="pergunta">
+                        <p><strong>Pergunta:</strong> {q.pergunta}</p>
+                        {q.opcoes.map((opt, j) => (
+                          <li key={j} style={{ fontWeight: opt.selecionado ? "bold" : "normal" }}>{opt.texto}</li>
+                        ))}
+                      </div>
+                    ))}
+                    <label>
+                      <input type="checkbox" checked={selecionado?.id === quiz.id} onChange={() => setSelecionado(quiz)} />
+                      selecionar quiz
+                    </label>
+                    <button onClick={() => handleDelete(quiz.id)} className="delete-button">
+                      <FaTrash />
+                    </button>
                   </div>
-                ))}
-                <label>
-                  Selecionar Quizz
-                  <input
-                    type="checkbox"
-                    checked={selecionado?.id === quiz.id}
-                    onChange={() => setSelecionado(quiz)}
-                  />
-                </label>
-              </div>
-            ))
-          )}
+                ))
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
