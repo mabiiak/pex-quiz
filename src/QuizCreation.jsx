@@ -4,7 +4,6 @@ import Header from "./Header";
 import './css/lista.css';
 
 export default function QuizCreation({ selecionado, setSelecionado }) {
-  // 🟢 Agora carregamos os quizzes diretamente ao inicializar o estado
   const [quizzes, setQuizzes] = useState(() => {
     const quizzesSalvos = localStorage.getItem("quizzes");
     return quizzesSalvos ? JSON.parse(quizzesSalvos) : [];
@@ -16,7 +15,6 @@ export default function QuizCreation({ selecionado, setSelecionado }) {
   const [novaOpcao, setNovaOpcao] = useState("");
   const [opcoes, setOpcoes] = useState([]);
 
-  // 🟢 Atualiza o localStorage sempre que quizzes for modificado
   useEffect(() => {
     localStorage.setItem("quizzes", JSON.stringify(quizzes));
   }, [quizzes]);
@@ -40,7 +38,7 @@ export default function QuizCreation({ selecionado, setSelecionado }) {
   const handleSave = () => {
     if (titulo.trim() && perguntas.length > 0) {
       const novoQuiz = { id: uuidv4(), titulo, perguntas };
-      setQuizzes((prevQuizzes) => [...prevQuizzes, novoQuiz]); // Atualiza corretamente
+      setQuizzes((prevQuizzes) => [...prevQuizzes, novoQuiz]);
       setTitulo("");
       setPerguntas([]);
     }
@@ -50,8 +48,9 @@ export default function QuizCreation({ selecionado, setSelecionado }) {
     <div className="container">
       <Header selecionado={selecionado} />
 
-      <div className="quiz-content-list">
-        <div className="content">
+      <div className="grid">
+        <div className="form-criacao">
+          <h2>Crie seu quiz</h2>
           <input
             type="text"
             placeholder="Título"
@@ -76,9 +75,9 @@ export default function QuizCreation({ selecionado, setSelecionado }) {
             />
             <button onClick={addOption}>+</button>
           </div>
-          <ul>
+          <div className="opcoes-nao-salvas">
             {opcoes.map((opt, index) => (
-              <li key={index}>
+              <label>  
                 <input
                   type="radio"
                   name="answer"
@@ -88,66 +87,66 @@ export default function QuizCreation({ selecionado, setSelecionado }) {
                   checked={opt.selecionado}
                 />
                 {opt.texto}
-              </li>
-            ))}
-          </ul>
-          <button onClick={addQuestion}>Adicionar Pergunta</button>
-        </div>
-      </div>
-
-      {/* Pré-visualização */}
-      <div className="preview">
-        <h2>Pré-visualização do Quiz</h2>
-        {perguntas.length === 0 ? (
-          <p>Nenhuma pergunta adicionada ainda.</p>
-        ) : (
-          perguntas.map((q, i) => (
-            <div key={q.id} className="question-preview">
-              <p><strong>Pergunta {i + 1}:</strong> {q.pergunta}</p>
-              <ul>
-                {q.opcoes.map((opt, j) => (
-                  <li key={j} style={{ fontWeight: opt.selecionado ? "bold" : "normal" }}>{opt.texto}</li>
-                ))}
-              </ul>
-            </div>
-          ))
-        )}
-        <button className="save-button" onClick={handleSave} disabled={!titulo || perguntas.length === 0}>
-          Salvar Quiz
-        </button>
-      </div>
-
-      {/* Lista de quizzes salvos */}
-      <div className="quiz-list">
-        <h2>Lista de quizzes</h2>
-        {quizzes.length === 0 ? (
-          <p>Nenhum quiz salvo ainda.</p>
-        ) : (
-          quizzes.map((quiz) => (
-            <div key={quiz.id} className="quiz-item">
-              <h3>{quiz.titulo}</h3>
-              
-              {quiz.perguntas.map((q, i) => (
-                <div key={i}>
-                  <p><strong>Pergunta:</strong> {q.pergunta}</p>
-                  <ul>
-                    {q.opcoes.map((opt, j) => (
-                      <li key={j} style={{ fontWeight: opt.selecionado ? "bold" : "normal" }}>{opt.texto}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-              <label>
-                Selecionar Quizz
-                <input
-                  type="checkbox"
-                  checked={selecionado?.id === quiz.id}
-                  onChange={() => setSelecionado(quiz)}
-                />
               </label>
-            </div>
-          ))
-        )}
+            ))}
+            <button onClick={addQuestion}>Adicionar Pergunta</button>
+          </div>
+        </div>
+
+        {/* Pré-visualização */}
+        <div className="preview">
+          <h2>Pré-visualização do Quiz</h2>
+          {perguntas.length === 0 ? (
+            <p>Nenhuma pergunta adicionada ainda.</p>
+          ) : (
+            perguntas.map((q, i) => (
+              <div key={q.id} className="question-preview">
+                <p><strong>Pergunta {i + 1}:</strong> {q.pergunta}</p>
+                <ul>
+                  {q.opcoes.map((opt, j) => (
+                    <li key={j} style={{ fontWeight: opt.selecionado ? "bold" : "normal" }}>{opt.texto}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          )}
+          <button className="save-button" onClick={handleSave} disabled={!titulo || perguntas.length === 0}>
+            Salvar Quiz
+          </button>
+        </div>
+
+        {/* Lista de quizzes salvos */}
+        <div className="quiz-list">
+          <h2>Lista de quizzes</h2>
+          {quizzes.length === 0 ? (
+            <p>Nenhum quiz salvo ainda.</p>
+          ) : (
+            quizzes.map((quiz) => (
+              <div key={quiz.id} className="quiz-item">
+                <h3>{quiz.titulo}</h3>
+                
+                {quiz.perguntas.map((q, i) => (
+                  <div key={i}>
+                    <p><strong>Pergunta:</strong> {q.pergunta}</p>
+                    <ul>
+                      {q.opcoes.map((opt, j) => (
+                        <li key={j} style={{ fontWeight: opt.selecionado ? "bold" : "normal" }}>{opt.texto}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                <label>
+                  Selecionar Quizz
+                  <input
+                    type="checkbox"
+                    checked={selecionado?.id === quiz.id}
+                    onChange={() => setSelecionado(quiz)}
+                  />
+                </label>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
