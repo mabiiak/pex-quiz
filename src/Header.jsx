@@ -10,9 +10,9 @@ export default function Header({ selecionado, score, currentQuestionIndex }) {
             <button onClick={() => navigate("/")}>home</button>
             <button onClick={() => navigate("/criar")}>criar quiz</button>
           </div>
-          <span className="title">{ selecionado ? selecionado.titulo : "Selecione um quizz" }</span>
+          <span className="title">{ selecionado ? selecionado.titulo : "Selecione um quiz" }</span>
           <div>
-          {selecionado &&
+          {currentQuestionIndex &&
             <>
               <span> {currentQuestionIndex} / {selecionado.perguntas.length} </span>
               <span> pontos: {score} </span>
